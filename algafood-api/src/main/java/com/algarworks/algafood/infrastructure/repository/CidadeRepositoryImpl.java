@@ -30,7 +30,7 @@ public class CidadeRepositoryImpl implements CidadeRepository {
 
 	@Override
 	@Transactional
-	public Cidade adicionar(Cidade cidade) {
+	public Cidade salvar(Cidade cidade) {
 		return manager.merge(cidade);
 	}
 

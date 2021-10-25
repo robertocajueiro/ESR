@@ -30,7 +30,7 @@ public class PermissaoRepositoryImpl implements PermissaoRepository{
 
 	@Override
 	@Transactional
-	public Permissao adicionar(Permissao permissao) {
+	public Permissao salvar(Permissao permissao) {
 		return manager.merge(permissao);
 	}
 
