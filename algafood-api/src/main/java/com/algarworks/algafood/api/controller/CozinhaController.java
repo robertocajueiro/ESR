@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algarworks.algafood.api.model.CozinhasXmlWrapper;
 import com.algarworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algarworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algarworks.algafood.domain.model.Cozinha;
@@ -38,11 +35,6 @@ public class CozinhaController {
 	@GetMapping
 	public List<Cozinha> listar(){
 		return cozinhaRepository.listar();
-	}
-	
-	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-	public CozinhasXmlWrapper listarXml(){
-		return new CozinhasXmlWrapper(cozinhaRepository.listar());
 	}
 	
 	@GetMapping("/{cozinhaId}")
@@ -69,11 +61,9 @@ public class CozinhaController {
 		Cozinha cozinhaAtual = cozinhaRepository.buscar(cozinhaId);
 		
 			if (cozinhaAtual != null) {
-			
-	//		cozinhaAtual.setNome(cozinha.getNome());
 			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 			
-			cozinhaRepository.salvar(cozinhaAtual);
+			cozinhaAtual = cadastroCozinha.salvar(cozinhaAtual);
 			return ResponseEntity.ok(cozinhaAtual);
 		}
 			
