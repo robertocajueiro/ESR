@@ -18,8 +18,8 @@ public class CadastroRestauranteService {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
-	public Restaurante salvar(Restaurante restaurate) {
-		Long cozinhaId = restaurate.getCozinha().getId();
+	public Restaurante salvar(Restaurante restaurante) {
+		Long cozinhaId = restaurante.getCozinha().getId();
 		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
 		
 		if (cozinha == null) {
@@ -27,9 +27,9 @@ public class CadastroRestauranteService {
 					String.format("Não existe cadastro de cozinha com código %d", cozinhaId));
 		}
 		
-		restaurate.setCozinha(cozinha);
+		restaurante.setCozinha(cozinha);
 		
-		return restauranteRepository.salvar(restaurate);
+		return restauranteRepository.salvar(restaurante);
 	}
 
 }
