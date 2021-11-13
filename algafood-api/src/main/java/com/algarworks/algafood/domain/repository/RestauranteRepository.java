@@ -2,6 +2,7 @@ package com.algarworks.algafood.domain.repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,12 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long>{
 	//And
 	List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinha);
 
+	// Limit - só o primeiro registro
+	Optional<Restaurante> findFirstRestauranteByNomeContaining(String nome);
+	
+	// Só os dois primeiros registros
+	List<Restaurante> findTop2ByNomeContaining(String nome);
+	
+	// Quantos restaurantes existe com determinada cozinha - count
+	int countByCozinhaId(Long cozinha);
 }
