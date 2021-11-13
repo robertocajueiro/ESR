@@ -23,7 +23,7 @@ public class TesteController {
 		return cozinhaRepository.findTodasByNome(nome);
 	}
 	
-	@GetMapping("/cozinhas/unico-por-nome")
+	@GetMapping("/cozinhas/unica-por-nome")
 	public Optional<Cozinha> cozinhaPorNome(String nome){
 		return cozinhaRepository.findByNome(nome);
 	}
