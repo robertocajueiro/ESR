@@ -8,6 +8,7 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.algarworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algarworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algarworks.algafood.domain.exception.NegocioException;
 
@@ -15,8 +16,7 @@ import com.algarworks.algafood.domain.exception.NegocioException;
 public class ApiExceptionHandler {
 	
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
-	public ResponseEntity<?> tratarEntidadeNãoEncontradaException(
-			EntidadeNaoEncontradaException e) {
+	public ResponseEntity<?> tratarEntidadeNãoEncontradaException(EntidadeNaoEncontradaException e) {
 		Problema problema = Problema.builder()
 				.dataHora(LocalDateTime.now())
 				.mensagem(e.getMessage()).build();
@@ -25,6 +25,16 @@ public class ApiExceptionHandler {
 				.body(problema);
 	}
 	
+	@ExceptionHandler(EntidadeEmUsoException.class)
+	public ResponseEntity<?> tratarEntidadeEmUsoException(EntidadeEmUsoException e){
+				Problema problema = Problema.builder()
+				.dataHora(LocalDateTime.now())
+				.mensagem(e.getMessage()).build();
+		
+		return ResponseEntity.status(HttpStatus.CONFLICT)
+				.body(problema);
+	}
+		
 	@ExceptionHandler(NegocioException.class)
 	public ResponseEntity<?> tratarNegocioException(NegocioException e) {
 		Problema problema = Problema.builder()
@@ -44,5 +54,9 @@ public class ApiExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
 				.body(problema);
 	}
+	
+
+	
+	
 
 }
