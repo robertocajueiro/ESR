@@ -34,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
@@ -51,8 +52,6 @@ public class Restaurante {
 	
 	@NotNull
 	@PositiveOrZero
-//	@TaxaFrete
-	@Multiplo(numero = 5)
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 	
