@@ -34,7 +34,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @ValorZeroIncluiDescricao(valorField = "taxaFrete",
-descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
+	descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
