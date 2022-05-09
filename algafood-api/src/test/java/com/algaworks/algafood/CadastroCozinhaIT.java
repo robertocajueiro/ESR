@@ -1,50 +1,34 @@
 package com.algaworks.algafood;
 
-import com.algaworks.algafood.domain.model.Cozinha;
-import com.algaworks.algafood.domain.service.CadastroCozinhaService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.validation.ConstraintViolationException;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CadastroCozinhaIT {
-
-	@Autowired
-	private CadastroCozinhaService cadastroCozinha;
+	
+	@LocalServerPort
+	private int port;
 	
 	@Test
-	public void deveAtribuirId_QuandoCadastrarCozinhaComDadosCorretos() {
-		// cenário
-		Cozinha novaCozinha = new Cozinha();
-		novaCozinha.setNome("Chinesa");
+	public void deveRetornarStatus200_QuandoConsultarCozinhas() {
+		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		
-		// ação
-		novaCozinha = cadastroCozinha.salvar(novaCozinha);
-		
-		// validação
-		assertThat(novaCozinha).isNotNull();
-		assertThat(novaCozinha.getId()).isNotNull();
-	}
-
-	@Test
-	public void deveFalhar_QuandoCadastrarCozinhaSemNome() {
-		Cozinha novaCozinha = new Cozinha();
-		novaCozinha.setNome(null);
-
-		ConstraintViolationException erroEsperado =
-				Assertions.assertThrows(ConstraintViolationException.class, () -> {
-					cadastroCozinha.salvar(novaCozinha);
-				});
-
-		assertThat(erroEsperado).isNotNull();
+		RestAssured.given()
+		.basePath("/cozinhas")
+		.port(port)
+		.accept(ContentType.JSON)
+	.when()
+		.get()
+	.then()
+		.statusCode(HttpStatus.OK.value());
 	}
 
 }
