@@ -1,5 +1,7 @@
 package com.algaworks.algafood;
 
+import static io.restassured.RestAssured.given;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,14 +23,28 @@ public class CadastroCozinhaIT {
 	public void deveRetornarStatus200_QuandoConsultarCozinhas() {
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		
-		RestAssured.given()
-		.basePath("/cozinhas")
-		.port(port)
-		.accept(ContentType.JSON)
-	.when()
-		.get()
-	.then()
-		.statusCode(HttpStatus.OK.value());
+		given()
+			.basePath("/cozinhas")
+			.port(port)
+			.accept(ContentType.JSON)
+		.when()
+			.get()
+		.then()
+			.statusCode(HttpStatus.OK.value());
 	}
+	
+//	@Test
+//	public void deveConter4Cozinhas_QuandoConsultarCozinhas() {
+//		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+//		
+//		RestAssured.given()
+//		.basePath("/cozinhas")
+//		.port(port)
+//		.accept(ContentType.JSON)
+//	.when()
+//		.get()
+//	.then()
+//		.statusCode(HttpStatus.OK.value());
+//	}
 
 }
