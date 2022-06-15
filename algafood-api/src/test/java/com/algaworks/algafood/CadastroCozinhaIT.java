@@ -1,7 +1,6 @@
 package com.algaworks.algafood;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 
 import org.flywaydb.core.Flyway;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import io.restassured.RestAssured;
@@ -19,13 +19,14 @@ import io.restassured.http.ContentType;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource("/application-test.properties")
 public class CadastroCozinhaIT {
 	
 	@LocalServerPort
 	private int port;
 	
 	@Autowired
-	private Flyway  flyway;
+	private Flyway flyway;
 	
 	@BeforeEach
 	public void SetUp() {
@@ -61,7 +62,7 @@ public class CadastroCozinhaIT {
 	@Test
 	public void deveRetornarStatus201_QuandoCadastrarCozinha() {
 		given()
-			.body("{\"nome\": \"Chinesa\"}")
+			.body("{ \"nome\": \"Chinesa\" }")
 			.contentType(ContentType.JSON)
 			.accept(ContentType.JSON)
 		.when()
