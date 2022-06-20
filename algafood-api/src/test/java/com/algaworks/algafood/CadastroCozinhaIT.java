@@ -26,6 +26,7 @@ import io.restassured.http.ContentType;
 @TestPropertySource("/application-test.properties")
 public class CadastroCozinhaIT {
 	
+	@SuppressWarnings("deprecation")
 	@LocalServerPort
 	private int port;
 	
@@ -34,6 +35,7 @@ public class CadastroCozinhaIT {
 	
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
+	
 	
 	@BeforeEach
 	public void SetUp() {
@@ -99,8 +101,7 @@ public class CadastroCozinhaIT {
 		.when()
 			.get("/{cozinhaId}")
 		.then()
-		.statusCode(HttpStatus.NOT_FOUND.value())
-			.body("nome", equalTo("Americana"));
+		.statusCode(HttpStatus.NOT_FOUND.value());
 	}
 	
 	private void prepararDados() {
@@ -109,7 +110,7 @@ public class CadastroCozinhaIT {
 		cozinhaRepository.save(cozinha1);
 		
 		Cozinha cozinha2 = new Cozinha();
-		cozinha2.setNome("Tailandesa");
+		cozinha2.setNome("Americana");
 		cozinhaRepository.save(cozinha2);
 	}
 
